@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>JS Calculator</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-200 flex justify-center items-center min-h-screen">
+  <div class="bg-white p-6 rounded-xl shadow-md w-[300px]">
+    
+    <!-- Display -->
+    <div id="display" class="border border-black text-right p-4 text-2xl font-mono bg-white rounded mb-4">
+      0
+    </div>
+
+    <!-- Keypad -->
+    <div class="grid grid-cols-4 gap-3">
+      <!-- Row 1 -->
+      <button class="btn bg-gray-300 py-3 rounded text-xl font-semibold">7</button>
+      <button class="btn bg-gray-300 py-3 rounded text-xl font-semibold">8</button>
+      <button class="btn bg-gray-300 py-3 rounded text-xl font-semibold">9</button>
+      <button class="btn bg-blue-400 text-white py-3 rounded text-xl font-semibold">/</button>
+
+      <!-- Row 2 -->
+      <button class="btn bg-gray-300 py-3 rounded text-xl font-semibold">4</button>
+      <button class="btn bg-gray-300 py-3 rounded text-xl font-semibold">5</button>
+      <button class="btn bg-gray-300 py-3 rounded text-xl font-semibold">6</button>
+      <button class="btn bg-blue-400 text-white py-3 rounded text-xl font-semibold">*</button>
+
+      <!-- Row 3 -->
+      <button class="btn bg-gray-300 py-3 rounded text-xl font-semibold">1</button>
+      <button class="btn bg-gray-300 py-3 rounded text-xl font-semibold">2</button>
+      <button class="btn bg-gray-300 py-3 rounded text-xl font-semibold">3</button>
+      <button class="btn bg-blue-400 text-white py-3 rounded text-xl font-semibold">-</button>
+
+      <!-- Row 4 -->
+      <button id="clear" class="bg-red-400 text-white py-3 rounded text-xl font-semibold">C</button>
+      <button class="btn bg-gray-300 py-3 rounded text-xl font-semibold">0</button>
+      <button class="btn bg-gray-300 py-3 rounded text-xl font-semibold">.</button>
+      <button class="btn bg-blue-400 text-white py-3 rounded text-xl font-semibold">+</button>
+
+      <!-- Equal -->
+      <button id="equals" class="col-span-4 bg-green-500 text-white py-3 rounded text-xl font-bold">=</button>
+    </div>
+  </div>
+
+  <script>
+    const display = document.getElementById("display");
+    const buttons = document.querySelectorAll(".btn");
+    const clearBtn = document.getElementById("clear");
+    const equalsBtn = document.getElementById("equals");
+
+    let expression = "";
+
+    buttons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        const value = btn.textContent;
+        if (display.textContent === "0" || display.textContent === "Error") {
+          expression = value;
+        } else {
+          expression += value;
+        }
+        display.textContent = expression;
+      });
+    });
+
+    clearBtn.addEventListener("click", () => {
+      expression = "";
+      display.textContent = "0";
+    });
+
+    equalsBtn.addEventListener("click", () => {
+      try {
+        const result = eval(expression);
+        display.textContent = result;
+        expression = result.toString();
+      } catch {
+        display.textContent = "Error";
+        expression = "";
+      }
+    });
+  </script>
+</body>
+</html>
